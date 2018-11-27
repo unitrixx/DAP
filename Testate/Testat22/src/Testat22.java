@@ -51,4 +51,43 @@ public class Testat22 {
         int recMax = maximum(arr, i-1);
         return arr[i]> recMax ? arr[i]:recMax;
     }
+
+    public static boolean isSorted(int[] arr, int i){
+        i--;
+        if (arr[i] <= arr[i+1]){
+            if (i == 0)
+                return true;
+            else return isSorted(arr, i-1);
+        }
+        return false;
+    }
+
+    public static int countPositives(int[] arr, int d, int t){
+        if (d <= t){
+            return arr[d] > 0? countPositives(arr, d+1, t) + 1 : countPositives(arr, d+1, t);
+        }
+        else return 0;
+    }
+
+    public static boolean contentCheck(char[] arr1, char[] arr2, int i){
+        if (i > 0){
+            return arr1[i] == arr2[i]? contentCheck(arr1, arr2, i-1) : false;
+        }
+        else if (i == 0)
+            return arr1[i] == arr2[i]? true : false;
+        else return false;
+    }
+
+    public static boolean palindromCheck(char[] arr, int i){
+        if (i < arr.length/2){
+            return arr[i] == arr[arr.length-1-i] ? palindromCheck(arr, i+1) : false;
+        }
+        else return true;
+    }
+
+    public static int getIndex(int[] arr, int i, int x){
+        if (i < 0 || i >= arr.length)
+            return -1;
+        return arr[i] == x ? i : getIndex(arr, i-1, x);
+    }
 }
