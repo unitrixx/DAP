@@ -23,7 +23,7 @@ public class Testat22 {
     }
 
     public static double powerPlus(int a, int n){
-        if (n < 0){
+        if (n > 0){
             if (n%2 == 0){
                 return powerPlus(a, n/2) * powerPlus(a, n/2);
             }
@@ -53,9 +53,8 @@ public class Testat22 {
     }
 
     public static boolean isSorted(int[] arr, int i){
-        i--;
-        if (arr[i] <= arr[i+1]){
-            if (i == 0)
+        if (arr[i-1] <= arr[i]){
+            if (i == 1)
                 return true;
             else return isSorted(arr, i-1);
         }
@@ -71,16 +70,15 @@ public class Testat22 {
 
     public static boolean contentCheck(char[] arr1, char[] arr2, int i){
         if (i > 0){
-            return arr1[i] == arr2[i]? contentCheck(arr1, arr2, i-1) : false;
+            return arr1[i] == arr2[i] && contentCheck(arr1, arr2, i-1);
         }
-        else if (i == 0)
-            return arr1[i] == arr2[i]? true : false;
-        else return false;
+        else
+            return arr1[i] == arr2[i];
     }
 
     public static boolean palindromCheck(char[] arr, int i){
         if (i < arr.length/2){
-            return arr[i] == arr[arr.length-1-i] ? palindromCheck(arr, i+1) : false;
+            return arr[i] == arr[arr.length-1-i] && palindromCheck(arr, i+1);
         }
         else return true;
     }
