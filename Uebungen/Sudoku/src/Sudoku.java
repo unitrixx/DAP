@@ -4,14 +4,14 @@ public class Sudoku {
     private boolean[][] writable;
 
     public Sudoku(int[][] vals){
+        writable = new boolean[9][9];
         values = vals;
-        for (int n = 0; n < values.length; n++){
-            for (int b = 0; b < values[n].length; b++){
-                if (b > 0)
+        for (int n = 0; n < 9; n++){
+            for (int b = 0; b < 9; b++){
+                if (values[n][b] > 0)
                     writable[n][b] = false;
                 else {
                     writable[n][b] = true;
-                    values[n][b] = 0;
                 }
             }
         }
@@ -28,5 +28,14 @@ public class Sudoku {
 
     public boolean isWritable(int i, int j){
         return writable[i][j];
+    }
+
+    public void show (){
+        for ( int i = 0; i < 9; i++){
+            for (int j = 0; j < 9; j++){
+                System.out.print(values[i][j]);
+            }
+            System.out.println("\n");
+        }
     }
 }

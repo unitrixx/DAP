@@ -5,29 +5,31 @@ public class SudokuSolver {
     }
 
     public boolean isSolvable(Sudoku sudoku, int i, int j){
-        if (i >= 9 && j >= 9)
-            return false;
-        if (i > 8)
-            return isSolvable(sudoku, 0, j+1);
+        if (i == 9 && j == 0)
+            return true;
         if (sudoku.isWritable(i, j)){
-            int n = 1;
-            while (conflictAt(sudoku, i, j, n){
-                if (n >= 9)
-                    return false;
-                n++;
+            for(int n = 1; n <= 9; n++)
+            {
+                if(conflictAt(sudoku,i,j,n))
+                    continue;
+                sudoku.setValue(i,j,n);
+                if (j != 8)
+                {
+                    if (isSolvable(sudoku, i, j + 1))
+                        return true;
+                }
+                else {
+                    if(isSolvable(sudoku, i+1, 0))
+                        return true;
+                }
+                sudoku.setValue(i,j,0);
             }
-            sudoku.setValue(i, j, n);
-            return isSolvable(sudoku, i+1, j) || isSolvable(sudoku, i-1, j);
+            return false;
         }
-        if (!sudoku.isWritable(i,j)){
-            return isSolvable(sudoku,i+1, j);
-        }
-        if (i == 8 && j == 8){
-            boolean result = false;
-            for (int k = 1; k <= 9; k++){
-                result = conflictAt(sudoku, i, j, k);
-            }
-            return result;
+        else{
+            if(j != 8)
+                return isSolvable(sudoku, i,j+1);
+            return isSolvable(sudoku, i+1, 0);
         }
     }
 
@@ -44,12 +46,25 @@ public class SudokuSolver {
             if (sudoku.getValue(a, j) == value)
                 return true;
         }
-        for (int r = i- i%3; r <= i - i%3 + 2; r++){
-            for (int c = j - j%3; c <= j - j%3 + 2; c++){
-                if (sudoku.getValue(r, c) == value)
+
+        int blockI = i - i%3;
+        int blockJ = j - j%3;
+
+        for(int a = 0; a < 3 ; a++)
+        {
+            for(int b = 0; b < 3; b++)
+            {
+                if(sudoku.getValue(blockI + a,blockJ + b) == value)
                     return true;
             }
         }
+
+//        for (int r = i- i%3; r <= i - i%3 + 2; r++){
+//            for (int c = j - j%3; c <= j - j%3 + 2; c++){
+//                if (sudoku.getValue(r, c) == value)
+//                    return true;
+//            }
+//        }
         return false;
     }
 }
