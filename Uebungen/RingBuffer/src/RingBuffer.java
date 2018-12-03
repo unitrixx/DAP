@@ -1,3 +1,5 @@
+import java.util.NoSuchElementException;
+
 public class RingBuffer {
 
     private int limit;
@@ -14,13 +16,13 @@ public class RingBuffer {
 
     public Student peek(){
         if (first == null)
-            throw new RuntimeException();
+            throw new RuntimeException("Buffer is empty!");
         return first.getStudent();
     }
 
     public void push(Student s){
         if (size >= limit)
-            throw new RuntimeException();
+            throw new RuntimeException("Buffer is full!");
         else if (first == null){
             first = new BufferElement(s);
             last = first;
@@ -35,9 +37,10 @@ public class RingBuffer {
 
     public Student pop(){
         if (first == null)
-            throw new RuntimeException();
+            throw new NoSuchElementException("Buffer is empty!");
         Student oldest = first.getStudent();
         first = first.getNext();
+        size--;
         return oldest;
     }
 
