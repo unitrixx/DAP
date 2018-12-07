@@ -200,5 +200,19 @@ public class CharacterSearchTree
             index = rightChild.toArray( collector, index + 1 );
         }
         return index;
-    }  
+    }
+
+    public HuffmanTriple minimum(){
+        if (isEmpty())
+            return null;
+        CharacterSearchTree current = this;
+        while (!current.isLeaf()){
+            current = current.leftChild;
+        }
+        return current;
+    }
+
+    public boolean hasOnlyCompleteNodes(){
+
+    }
 }
