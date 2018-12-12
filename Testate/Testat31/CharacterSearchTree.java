@@ -209,10 +209,65 @@ public class CharacterSearchTree
         while (!current.isLeaf()){
             current = current.leftChild;
         }
-        return current;
+        return current.getContent();
     }
 
     public boolean hasOnlyCompleteNodes(){
+        if (isEmpty())
+            return true;
+        if (isLeaf())
+            return true;
+        if (leftChild.isEmpty() != rightChild.isEmpty())
+            return false;
+        return leftChild.hasOnlyCompleteNodes() && rightChild.hasOnlyCompleteNodes();
+    }
 
+    public boolean containsCharacter(char t){
+        if (isEmpty())
+            return false;
+        if (content.getToken() == t)
+            return true;
+        if (t < content.getToken())
+            return leftChild.containsCharacter(t);
+        else return rightChild.containsCharacter(t);
+    }
+
+    public boolean equalStructure(CharacterSearchTree cst){
+        if (isEmpty())
+            return cst.isEmpty();
+        if (isLeaf() || cst.isLeaf())
+            return isLeaf() == cst.isLeaf();
+        return leftChild.equalStructure(cst.leftChild) && rightChild.equalStructure(cst.rightChild);
+    }
+
+    public CharacterSearchTree rotateNodeToRight(){
+        if (isEmpty() || leftChild.isEmpty())
+            return this;
+        if (leftChild.rightChild.isEmpty()) {
+            leftChild.rightChild = this;
+            CharacterSearchTree res = leftChild;
+            leftChild = new CharacterSearchTree();
+            return res;
+        }
+        else {
+            CharacterSearchTree root = new CharacterSearchTree();
+            root.rightChild = this;
+            root.leftChild = this.leftChild;
+            root.content = this.leftChild.content;
+            this.leftChild = new CharacterSearchTree();
+            return root.leftChild;
+        }
+    }
+
+    public boolean samePath(char t1, char t2){
+        char greater = t1 > t2 ? t1 : t2;
+        char smaller = t1 > t2 ? t2 : t1;
+        if (content.getToken() < greater && content.getToken() > smaller)
+            return false;
+        if (content.getToken() > greater)
+            leftChild.samePath(t1, t2);
+        if (content.getToken() < greater)
+            rightChild.samePath(t1, t2);
+        return containsCharacter(smaller);
     }
 }
