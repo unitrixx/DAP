@@ -243,20 +243,10 @@ public class CharacterSearchTree
     public CharacterSearchTree rotateNodeToRight(){
         if (isEmpty() || leftChild.isEmpty())
             return this;
-        if (leftChild.rightChild.isEmpty()) {
-            leftChild.rightChild = this;
-            CharacterSearchTree res = leftChild;
-            leftChild = new CharacterSearchTree();
-            return res;
-        }
-        else {
-            CharacterSearchTree root = new CharacterSearchTree();
-            root.rightChild = this;
-            root.leftChild = this.leftChild;
-            root.content = this.leftChild.content;
-            this.leftChild = new CharacterSearchTree();
-            return root.leftChild;
-        }
+        CharacterSearchTree temp = leftChild;
+        this.leftChild = leftChild.rightChild;
+        temp.rightChild = this;
+        return temp;
     }
 
     public boolean samePath(char t1, char t2){
