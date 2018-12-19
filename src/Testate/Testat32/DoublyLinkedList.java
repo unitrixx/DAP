@@ -11,6 +11,16 @@ public class DoublyLinkedList
         size = 0;
     }
 
+    public DoublyLinkedList(DoublyLinkedList dll){
+        if (!dll.isEmpty()){
+            Element current = dll.first;
+            for (int i = 0; i < dll.size;i++){
+                add(current.getContent());
+                current = current.getSucc();
+            }
+        }
+    }
+
     public int size()
     {
         return size;
@@ -225,5 +235,79 @@ public class DoublyLinkedList
             current = current.getPred();
         }
         return result;
+    }
+
+    public void remove (int n){
+        if (n > size)
+            throw new IllegalStateException();
+        Element current = first;
+       for (int i = 0; i < n; i++){
+           current = current.getSucc();
+       }
+       if (size == 1)
+           last = first = null;
+       else if (current.equals(first)){
+           first = current.getSucc();
+           first.disconnectPred();
+       }
+       else if (current.equals(last)){
+           last = current.getPred();
+           last.disconnectSucc();
+       }
+       else {
+           current.getPred().connectAsSucc(current.getSucc());
+       }
+       size--;
+    }
+
+    public void remove (Object o){
+        Element current = first;
+        for (int i = 0; i < size; i++){
+            if (current.getContent().equals(o))
+                remove(i);
+        }
+    }
+
+    public void concat(DoublyLinkedList dll){
+        if (!dll.isEmpty()) {
+            last.connectAsSucc(dll.first);
+            last = dll.last;
+            size += dll.size;
+            dll.clear();
+        }
+    }
+
+    public DoublyLinkedList subList(int from, int to){
+        if (from < 0 || to >= size)
+            throw new IndexOutOfBoundsException();
+        DoublyLinkedList result = new DoublyLinkedList();
+        for (int i = from; i < to; i++){
+            result.add(get(i));
+        }
+        return result;
+    }
+
+    public void removeAll(DoublyLinkedList dll){
+        if (!dll.isEmpty()) {
+            Element current = dll.first;
+            for (int i = 0; i < dll.size; i++) {
+                remove(current.getContent());
+                current = current.getSucc();
+            }
+        }
+    }
+
+    public void pack(){
+        if (!isEmpty()) {
+            Element current = first;
+            for (int i = 0; i < size; i++){
+                while (current.hasSucc() && current.getContent().equals(current.getSucc().getContent())){
+                    remove(i+1);
+                    size--;
+                }
+                if (current.hasSucc())
+                    current = current.getSucc();
+            }
+        }
     }
 }
