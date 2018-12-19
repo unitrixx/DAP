@@ -1,4 +1,4 @@
-package Uebungen.DoublyLinkedList;
+package Testate.Testat32;
 
 public class DoublyLinkedList
 {
@@ -133,7 +133,7 @@ public class DoublyLinkedList
                 break;
             current = current.getSucc();
         }
-        return current.getContent() == o;
+        return current.getContent().equals(o);
     }
 
     public int count(Object o){
@@ -142,6 +142,88 @@ public class DoublyLinkedList
             if (e.getContent().equals(o))
                 count++;
         }
+        count = last.getContent().equals(o) ? count + 1 : count;
         return count;
+    }
+
+    public boolean allEqual(){
+        boolean result = true;
+        Element current = first.getSucc();
+        while (result && current.hasSucc()){
+            if (!current.getContent().equals(first))
+                result = false;
+            current = current.getSucc();
+        }
+        if (!last.getContent().equals(first))
+            result = false;
+        return result;
+    }
+
+    public boolean containsDouble(){
+        boolean result = false;
+        Element current = first;
+        for (int i = 0; i < size; i++){
+            Element compare = current.getSucc();
+            for (int k = i+1; k < size; k++){
+                if (compare.getContent().equals(current)) {
+                    result = true;
+                    break;
+                }
+                compare = compare.getSucc();
+            }
+            current = current.getSucc();
+            if (result)
+                break;
+        }
+        return result;
+    }
+
+    public void insert(int n, Object o){
+        if (n >= size || n < 0)
+            throw new IndexOutOfBoundsException();
+        else if (n == 0){
+            new Element(o).connectAsSucc(first);
+            first = first.getPred();
+            size++;
+        }
+        else {
+            Element index = first;
+            for (int i = 1; i <= n; i++)
+                index = index.getSucc();
+            if (index.hasSucc()) {
+                Element temp = index.getSucc();
+                index.connectAsSucc(new Element(o));
+                index.getSucc().connectAsSucc(temp);
+                size++;
+            }
+            else {
+                index.connectAsSucc(new Element(o));
+                last = index.getSucc();
+                size++;
+            }
+        }
+    }
+
+    public void toArray(Object[] arr){
+        Element current = first;
+        for (int i = 0; i < arr.length; i++){
+            if (i >= size)
+                arr[i] = null;
+            else {
+                arr[i] = current;
+                if (current != null)
+                    current = current.getSucc();
+            }
+        }
+    }
+
+    public DoublyLinkedList flip(){
+        DoublyLinkedList result = new DoublyLinkedList();
+        Element current = last;
+        for (int n = 0; n < size; n++){
+            result.add(current.getContent());
+            current = current.getPred();
+        }
+        return result;
     }
 }
