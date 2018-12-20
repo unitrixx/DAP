@@ -133,12 +133,12 @@ public class DoublyLinkedList
     }
 
     public Object getLast(){
-        return last;
+        return last.getContent();
     }
 
     public boolean contains(Object o){
         Element current = first;
-        while (current.getContent().equals(o)){
+        while (!current.getContent().equals(o)){
             if (current == last)
                 break;
             current = current.getSucc();
@@ -158,13 +158,15 @@ public class DoublyLinkedList
 
     public boolean allEqual(){
         boolean result = true;
+        if (isEmpty())
+            return result;
         Element current = first.getSucc();
         while (result && current.hasSucc()){
-            if (!current.getContent().equals(first))
+            if (!current.getContent().equals(first.getContent()))
                 result = false;
             current = current.getSucc();
         }
-        if (!last.getContent().equals(first))
+        if (!last.getContent().equals(first.getContent()))
             result = false;
         return result;
     }
@@ -175,7 +177,7 @@ public class DoublyLinkedList
         for (int i = 0; i < size; i++){
             Element compare = current.getSucc();
             for (int k = i+1; k < size; k++){
-                if (compare.getContent().equals(current)) {
+                if (compare.getContent().equals(current.getContent())) {
                     result = true;
                     break;
                 }
@@ -220,7 +222,7 @@ public class DoublyLinkedList
             if (i >= size)
                 arr[i] = null;
             else {
-                arr[i] = current;
+                arr[i] = current.getContent();
                 if (current != null)
                     current = current.getSucc();
             }

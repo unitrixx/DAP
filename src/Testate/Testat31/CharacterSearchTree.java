@@ -1,3 +1,5 @@
+package Testate.Testat31;
+
 public class CharacterSearchTree
 { 
     private HuffmanTriple content;

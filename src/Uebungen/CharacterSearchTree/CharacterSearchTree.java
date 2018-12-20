@@ -1,7 +1,14 @@
 package Uebungen.CharacterSearchTree;
 
 public class CharacterSearchTree
-{ 
+{
+
+    public static void main(String[] args){
+        CharacterSearchTree tree = new CharacterSearchTree(new char[]{'g', 'x', 'b', 'a'});
+        CharacterSearchTree[] ret = tree.breadthFirstTraversal();
+        for (int i = 0; i < ret.length;i++)
+            System.out.println(ret[i].getContent().getToken());
+    }
     private HuffmanTriple content;
     private CharacterSearchTree leftChild, rightChild;
 
@@ -294,5 +301,22 @@ public class CharacterSearchTree
             else continue;
         }
         return max;
+    }
+
+    public CharacterSearchTree[] breadthFirstTraversal(){
+        CharacterSearchTree[] result = new CharacterSearchTree[size()];
+        RingBufferArray buffer = new RingBufferArray(size());
+        buffer.push(this);
+        int i = 0;
+        while (buffer.countElements() != 0){
+            CharacterSearchTree current = buffer.pop();
+            result[i] = current;
+            if (!current.leftChild.isEmpty())
+                buffer.push(current.leftChild);
+            if (!current.rightChild.isEmpty())
+                buffer.push(current.rightChild);
+            i++;
+        }
+        return result;
     }
 }

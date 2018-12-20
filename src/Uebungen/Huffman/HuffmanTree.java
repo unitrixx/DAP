@@ -1,3 +1,5 @@
+package Uebungen.Huffman;
+
 public class HuffmanTree
 {
     private HuffmanTriple content;
