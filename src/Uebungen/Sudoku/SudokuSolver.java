@@ -1,3 +1,5 @@
+package Uebungen.Sudoku;
+
 public class SudokuSolver {
 
     public boolean isSolvable(Sudoku sudoku){
@@ -58,13 +60,8 @@ public class SudokuSolver {
                     return true;
             }
         }
-
-//        for (int r = i- i%3; r <= i - i%3 + 2; r++){
-//            for (int c = j - j%3; c <= j - j%3 + 2; c++){
-//                if (sudoku.getValue(r, c) == value)
-//                    return true;
-//            }
-//        }
         return false;
     }
+
+
 }

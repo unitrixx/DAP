@@ -1,3 +1,4 @@
+package Uebungen.Sudoku;
 
 public class Sudoku_Test {
 	public static void main(String[] args) {
