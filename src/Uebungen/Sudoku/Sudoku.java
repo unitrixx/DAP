@@ -58,10 +58,14 @@ public class Sudoku {
     private class SameRowIterator implements Iterator<Integer>{
         int r;
         int c;
+        int x;
+        int y;
 
         public SameRowIterator(int i, int j){
             r = i;
             c = 0;
+            x = i;
+            y = j;
         }
 
         public boolean hasNext(){
@@ -69,6 +73,8 @@ public class Sudoku {
         }
 
         public Integer next(){
+            if (r == x && c == y)
+                c++;
             if (hasNext()){
                 c++;
                 return values[r][c-1];
@@ -81,18 +87,23 @@ public class Sudoku {
 
         int r;
         int c;
+        int x;
+        int y;
 
-        public SameColumnIterator(int x, int y){
+        public SameColumnIterator(int i, int j){
             r = 0;
-            c = y;
+            c = j;
+            x = i;
+            y = j;
         }
-
 
         public boolean hasNext(){
             return c < 9 && r < 9;
         }
 
         public Integer next(){
+            if (r == x && c == y)
+                r++;
             if (hasNext()){
                 r++;
                 return values[r-1][c];
@@ -105,10 +116,14 @@ public class Sudoku {
 
         int r;
         int c;
+        int x;
+        int y;
 
-        public SameBoxIterator(int x, int y){
-            r = x - x%3;
-            c = y - y%3;
+        public SameBoxIterator(int i, int j){
+            r = i - i%3;
+            c = j - j%3;
+            x = i;
+            y = j;
         }
 
         public boolean hasNext(){
@@ -116,6 +131,13 @@ public class Sudoku {
         }
 
         public Integer next(){
+            if (r == x && c == y) {
+                c++;
+                if (c%3 == 0){
+                    c -= 3;
+                    r++;
+                }
+            }
             if (hasNext()){
                 int ret = values[r][c];
                 c++;
