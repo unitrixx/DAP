@@ -1,7 +1,5 @@
 package Testate.Testat41;
 
-import Uebungen.DoublyLinkedList.Element;
-
 public class Strategies {
 
     public class CountXStrategy extends DoublyLinkedList.InspectionStrategy<Integer>{
