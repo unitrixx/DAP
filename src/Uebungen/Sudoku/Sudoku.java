@@ -73,7 +73,7 @@ public class Sudoku {
         }
 
         public Integer next(){
-            if (r == x && c == y)
+            if (c == y)
                 c++;
             if (hasNext()){
                 c++;
@@ -102,7 +102,7 @@ public class Sudoku {
         }
 
         public Integer next(){
-            if (r == x && c == y)
+            if (r == x)
                 r++;
             if (hasNext()){
                 r++;
@@ -127,24 +127,20 @@ public class Sudoku {
         }
 
         public boolean hasNext(){
+            if (c%3 == 0){
+                c -= 3;
+                r++;
+            }
             return r%3 != 0;
         }
 
         public Integer next(){
             if (r == x && c == y) {
                 c++;
-                if (c%3 == 0){
-                    c -= 3;
-                    r++;
-                }
             }
             if (hasNext()){
                 int ret = values[r][c];
                 c++;
-                if (c%3 == 0){
-                    c -= 3;
-                    r++;
-                }
                 return ret;
             }
             else throw new IndexOutOfBoundsException();

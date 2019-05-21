@@ -26,6 +26,10 @@ public class Iterator {
     }
 
     public boolean hasNext(){
+        if (c >= arr[r].length) {
+            c = 0;
+            r += rOffset;
+        }
         return r < arr.length && c < arr[r].length;
     }
 
@@ -33,10 +37,6 @@ public class Iterator {
         if (hasNext()){
             int ret = arr[r][c];
             c += cOffset;
-            if (!(c < arr[r].length)) {
-                c = 0;
-                r += rOffset;
-            }
             return ret;
         }
         else {

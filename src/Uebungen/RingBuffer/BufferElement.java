@@ -1,3 +1,5 @@
+package Uebungen.RingBuffer;
+
 public class BufferElement {
 
     private Student student;

@@ -1,3 +1,5 @@
+package Uebungen.BinarySearch;
+
 public class BinarySearch {
 
     public static boolean binarySearchIterativ(int[] sorted, int candidate){
